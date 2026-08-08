@@ -1,9 +1,16 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.12%2B-blue?style=for-the-badge" alt="Python 3.12+">
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="MIT License">
-  <img src="https://img.shields.io/badge/Platform-Cloud%20%2F%20Web-blue?style=for-the-badge" alt="Cloud / Web">
+  <span style="font-size: 24px; font-weight: 800; color: #2563eb;">
+    Python 3.12+
+  </span>
+  &nbsp;&nbsp;&nbsp;
+  <span style="font-size: 24px; font-weight: 800; color: #16a34a;">
+    MIT License
+  </span>
+  &nbsp;&nbsp;&nbsp;
+  <span style="font-size: 24px; font-weight: 800; color: #2563eb;">
+    Cloud / Web
+  </span>
 </p>
-
 
 # Sentinel Cloud
 
