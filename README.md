@@ -1,6 +1,6 @@
-![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue)
-![MIT License](https://img.shields.io/badge/License-MIT-green)
-![Cloud / Web](https://img.shields.io/badge/Platform-Cloud%20%2F%20Web-blue)
+ ![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue)
+                      ![MIT License](https://img.shields.io/badge/License-MIT-green)
+                      ![Cloud / Web](https://img.shields.io/badge/Platform-Cloud%20%2F%20Web-blue)
 
 
 # Sentinel Cloud
