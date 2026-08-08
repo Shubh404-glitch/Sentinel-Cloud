@@ -3,6 +3,9 @@
 [![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Cloud-0078D6.svg)](https://github.com/Shubh404-glitch/Sentinel-Cloud)
+
+</div>
+
 # Sentinel Cloud
 
 Sentinel Cloud is the web-based cloud edition of SentinelScan, providing centralized security scanning, asset visibility, project management, reporting, user management, and security-focused application controls.
