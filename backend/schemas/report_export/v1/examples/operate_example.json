@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "source_edition": "operate",
+  "export_id": "3f6a1c2d-7e4b-4a3c-8f21-9d5e2b6a4c11",
+  "generated_at": "2026-07-20T18:00:00Z",
+  "scan": {
+    "started_at": "2026-07-20T00:00:00Z",
+    "completed_at": "2026-07-20T18:00:00Z"
+  },
+  "producer": {
+    "product": "SentinelScan Operate",
+    "product_version": "2.1.0"
+  },
+  "assets": [
+    {
+      "asset_ref": "asset-1",
+      "identifier": "api-gateway-7c9f",
+      "identifier_type": "hostname",
+      "display_name": "api-gateway (container)",
+      "tags": ["kubernetes", "namespace:payments"],
+      "extensions": {
+        "container_image": "registry.internal/api-gateway:2026.07.18",
+        "cluster": "prod-us-east-1"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "finding_ref": "finding-1",
+      "asset_ref": "asset-1",
+      "title": "Container running as root user at runtime",
+      "description": "The api-gateway container was observed running its main process as UID 0 during the monitored window, contrary to the org's baseline policy of non-root runtime execution.",
+      "severity": "medium",
+      "source_recommendation_text": "Set a non-root USER in the image and drop unneeded Linux capabilities.",
+      "signature": {
+        "service": null,
+        "version": null,
+        "configuration_pattern": "runAsUser=0"
+      },
+      "cve_ids": [],
+      "first_observed_at": "2026-07-20T03:12:00Z",
+      "evidence": {
+        "detection_method": "runtime_policy_scan",
+        "pod_name": "api-gateway-7c9f-6d4b8f9c7-abc12"
+      }
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sentinelscan.io/report-export/v1/common.schema.json",
+  "title": "SentinelScan Report Export -- Common Definitions (v1, DRAFT)",
+  "description": "Shared $defs used by discover.schema.json and operate.schema.json. Not a standalone envelope on its own -- see README.md.",
+  "$defs": {
+    "severity": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "Must match sentinelscan_cloud.domain.enums.SeverityEnum exactly."
+    },
+
+    "identifierType": {
+      "type": "string",
+      "enum": ["ip_v4", "ip_v6", "hostname", "fqdn"],
+      "description": "Validation/normalization hint only -- not persisted on Asset today. See README.md decision #5."
+    },
+
+    "cveId": {
+      "type": "string",
+      "pattern": "^CVE-[0-9]{4}-[0-9]{4,}$"
+    },
+
+    "signature": {
+      "type": "object",
+      "description": "Used for Threat Reference Correlation (Section 12.5) against ThreatReferenceEntry.signature. All fields optional -- most Findings won't match a known entry.",
+      "additionalProperties": false,
+      "properties": {
+        "service": {"type": ["string", "null"], "maxLength": 255},
+        "version": {"type": ["string", "null"], "maxLength": 100},
+        "configuration_pattern": {"type": ["string", "null"], "maxLength": 500}
+      }
+    },
+
+    "asset": {
+      "type": "object",
+      "required": ["asset_ref", "identifier", "identifier_type"],
+      "additionalProperties": false,
+      "properties": {
+        "asset_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Report-local identifier, referenced by findings[].asset_ref. Not a Cloud primary key -- see README.md decision #6."
+        },
+        "identifier": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Maps directly to Asset.identifier (String(255)). An IP or hostname, used as the reconciliation key across reports."
+        },
+        "identifier_type": {"$ref": "#/$defs/identifierType"},
+        "display_name": {"type": ["string", "null"], "maxLength": 255},
+        "tags": {
+          "type": "array",
+          "items": {"type": "string", "maxLength": 100},
+          "maxItems": 100
+        },
+        "extensions": {
+          "type": "object",
+          "description": "Open, producer-specific bag (e.g. open ports, OS fingerprint). additionalProperties intentionally true -- see README.md decision #2.",
+          "additionalProperties": true
+        }
+      }
+    },
+
+    "finding": {
+      "type": "object",
+      "required": ["finding_ref", "asset_ref", "title", "description", "severity"],
+      "additionalProperties": false,
+      "properties": {
+        "finding_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Report-local identifier. Not a Cloud primary key and not used as a correlation fingerprint -- see README.md decisions #6-7."
+        },
+        "asset_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Must match exactly one assets[].asset_ref in the same export."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "description": "Maps to Finding.title (String(500)). Oversized input is rejected, not truncated -- see README.md decision #4."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000,
+          "description": "Maps to Finding.description (Text, no DB limit). 100k cap here is a sanity/DoS guard only, not a modeled product limit."
+        },
+        "severity": {"$ref": "#/$defs/severity"},
+        "source_recommendation_text": {
+          "type": ["string", "null"],
+          "maxLength": 20000,
+          "description": "Maps to Finding.source_recommendation_text."
+        },
+        "signature": {"$ref": "#/$defs/signature"},
+        "cve_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/cveId"},
+          "maxItems": 100,
+          "description": "Shared field, not edition-specific -- see README.md decision #8."
+        },
+        "first_observed_at": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "Informational only -- Cloud computes its own new/resolved/recurring correlation state in Stage 3 (Section 12.1), it does not trust this field for that."
+        },
+        "evidence": {
+          "type": "object",
+          "description": "Open, producer-specific bag (ports, banners, log excerpts, runtime context). additionalProperties intentionally true -- see README.md decision #2.",
+          "additionalProperties": true
+        }
+      }
+    },
+
+    "producer": {
+      "type": "object",
+      "required": ["product", "product_version"],
+      "additionalProperties": false,
+      "properties": {
+        "product": {"type": "string"},
+        "product_version": {"type": "string", "maxLength": 50}
+      }
+    },
+
+    "scanWindow": {
+      "type": "object",
+      "required": ["started_at", "completed_at"],
+      "additionalProperties": false,
+      "properties": {
+        "started_at": {"type": "string", "format": "date-time"},
+        "completed_at": {"type": "string", "format": "date-time"}
+      }
+    },
+
+    "envelope": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "source_edition",
+        "export_id",
+        "generated_at",
+        "scan",
+        "producer",
+        "assets",
+        "findings"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+$",
+          "description": "MAJOR.MINOR. See README.md decision #3 for the versioning contract."
+        },
+        "source_edition": {"type": "string", "enum": ["discover", "operate"]},
+        "export_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Producer-generated, for producer-side traceability/support only -- not Cloud's Report.id."
+        },
+        "generated_at": {"type": "string", "format": "date-time"},
+        "scan": {"$ref": "#/$defs/scanWindow"},
+        "producer": {"$ref": "#/$defs/producer"},
+        "assets": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/asset"},
+          "minItems": 1,
+          "description": "An export with zero assets is not meaningful -- at least one is required."
+        },
+        "findings": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/finding"},
+          "minItems": 0,
+          "description": "Zero findings is valid (a clean scan)."
+        }
+      }
+    }
+  }
+}

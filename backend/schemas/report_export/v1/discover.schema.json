@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sentinelscan.io/report-export/v1/discover.schema.json",
+  "title": "SentinelScan Discover Report Export (v1, DRAFT)",
+  "description": "Thin profile over common.schema.json#/$defs/envelope, pinning source_edition and producer.product. See README.md decision #1 -- Discover and Operate share one shape in this proposal.",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/envelope"},
+    {
+      "type": "object",
+      "properties": {
+        "source_edition": {"const": "discover"},
+        "producer": {
+          "type": "object",
+          "properties": {
+            "product": {"const": "SentinelScan Discover"}
+          }
+        }
+      }
+    }
+  ]
+}
