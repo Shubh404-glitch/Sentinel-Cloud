@@ -58,6 +58,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
+        "https://sentinel-cloud-18evbzo3u-shubh404-glitchs-projects.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
