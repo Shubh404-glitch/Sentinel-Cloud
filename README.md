@@ -1,16 +1,8 @@
-<p align="center">
-  <span style="font-size: 24px; font-weight: 800; color: #2563eb;">
-    Python 3.12+
-  </span>
-  &nbsp;&nbsp;&nbsp;
-  <span style="font-size: 24px; font-weight: 800; color: #16a34a;">
-    MIT License
-  </span>
-  &nbsp;&nbsp;&nbsp;
-  <span style="font-size: 24px; font-weight: 800; color: #2563eb;">
-    Cloud / Web
-  </span>
-</p>
+<div align="center">
+
+[![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Cloud-0078D6.svg)]
 
 # Sentinel Cloud
 
