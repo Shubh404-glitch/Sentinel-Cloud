@@ -1,6 +1,8 @@
- ![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue)
-                      ![MIT License](https://img.shields.io/badge/License-MIT-green)
-                      ![Cloud / Web](https://img.shields.io/badge/Platform-Cloud%20%2F%20Web-blue)
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.12%2B-blue?style=for-the-badge" alt="Python 3.12+">
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="MIT License">
+  <img src="https://img.shields.io/badge/Platform-Cloud%20%2F%20Web-blue?style=for-the-badge" alt="Cloud / Web">
+</p>
 
 
 # Sentinel Cloud
